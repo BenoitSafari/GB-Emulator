@@ -4,11 +4,11 @@
 
 # Compiler settings - Can be customized.
 CC = g++
-CXXFLAGS = -std=c++11 -Wall
-LDFLAGS = 
+CXXFLAGS = -std=c++11 -Wall -g
+LDFLAGS = -lSDL2 -lGL -lGLEW
 
 # Makefile settings - Can be customized.
-APPNAME = myapp
+APPNAME = launch
 EXT = .cpp
 SRCDIR = src
 OBJDIR = obj

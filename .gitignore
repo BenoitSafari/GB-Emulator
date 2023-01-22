@@ -1,0 +1,7 @@
+/logs
+/.vscode
+
+/obj/*.o
+/*.d
+
+/launch
