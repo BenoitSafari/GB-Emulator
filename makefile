@@ -1,7 +1,3 @@
-########################################################################
-####################### Makefile Template ##############################
-########################################################################
-
 # Compiler settings - Can be customized.
 CC = gcc
 CXXFLAGS = -std=gnu17 -Wall -g
@@ -11,7 +7,8 @@ LDFLAGS = -lSDL2
 APPNAME = launch
 EXT = .c
 SRCDIR = src
-OBJDIR = obj
+OBJDIR = build/obj
+INCDIR = include
 
 ############## Do not change anything from here downwards! #############
 SRC = $(wildcard $(SRCDIR)/*$(EXT))
@@ -23,7 +20,9 @@ DELOBJ = $(OBJ)
 # Windows OS variables & settings
 DEL = del
 EXE = .exe
-WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
+WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=build\\obj\\%.o)
+
+CXXFLAGS += -I$(INCDIR)
 
 ########################################################################
 ####################### Targets beginning here #########################
@@ -37,7 +36,7 @@ $(APPNAME): $(OBJ)
 
 # Creates the dependecy rules
 %.d: $(SRCDIR)/%$(EXT)
-	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+	@$(CPP) $(CXXFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
 
 # Includes all .h files
 -include $(DEP)

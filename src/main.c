@@ -1,7 +1,7 @@
-#include <stdio.h>
+#include <gb_emu.h>
 
 int main()
 {
-  printf("Hello, world!\n");
+  start();
   return 0;
 }

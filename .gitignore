@@ -1,7 +1,6 @@
 /logs
 /.vscode
 
-/obj/*.o
+build/obj/*
+build/launch
 /*.d
-
-/launch
