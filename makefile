@@ -3,13 +3,13 @@
 ########################################################################
 
 # Compiler settings - Can be customized.
-CC = g++
-CXXFLAGS = -std=c++11 -Wall -g
-LDFLAGS = -lSDL2 -lGL -lGLEW
+CC = gcc
+CXXFLAGS = -std=gnu17 -Wall -g
+LDFLAGS = -lSDL2
 
 # Makefile settings - Can be customized.
 APPNAME = launch
-EXT = .cpp
+EXT = .c
 SRCDIR = src
 OBJDIR = obj
 
