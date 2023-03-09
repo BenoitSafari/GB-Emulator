@@ -4,3 +4,7 @@
 build/obj/*
 build/launch
 /*.d
+
+/roms/*.gb
+/roms/*.gbc
+/roms/*.gba

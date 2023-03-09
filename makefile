@@ -1,6 +1,6 @@
 # Compiler settings - Can be customized.
 CC = gcc
-CXXFLAGS = -std=gnu17 -Wall -g
+CXXFLAGS = -std=gnu17 -Wall -g -I/usr/include/SDL2
 LDFLAGS = -lSDL2
 
 # Makefile settings - Can be customized.

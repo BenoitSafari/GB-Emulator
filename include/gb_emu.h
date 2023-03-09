@@ -2,11 +2,10 @@
 
 #include <common.h>
 
-typedef struct
-{
-  bool paused;
-  bool running;
-  uint64_t ticks;
+typedef struct {
+    bool is_paused;
+    bool is_booted;
+    uint64_t ticks;
 } gb_emu_context;
 
 // returns the value of the n'th bit of "a"
