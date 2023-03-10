@@ -1,68 +1,49 @@
-# Compiler settings - Can be customized.
-CC = gcc
-CXXFLAGS = -std=gnu17 -Wall -g -I/usr/include/SDL2
-LDFLAGS = -lSDL2
-
-# Makefile settings - Can be customized.
-APPNAME = launch
+# Makefile settings
+APPNAME = build/app
 EXT = .c
 SRCDIR = src
 OBJDIR = build/obj
+DEPDIR = build/dep
 INCDIR = include
+SDL2LIB = /usr/include/SDL2
+CLEAN_CMD = rm -f $(OBJDIR)/*.o $(DEPDIR)/*.d $(APPNAME) 
 
-############## Do not change anything from here downwards! #############
+# Adapt paths and cmd for Windows OS
+ifeq ($(OS),Windows_NT)
+	APPNAME := $(subst /,\,$(APPNAME))
+	OBJDIR := $(subst /,\,$(OBJDIR))
+	DEPDIR := $(subst /,\,$(DEPDIR))
+	CLEAN_CMD := del /Q $(OBJDIR)\*.o $(DEPDIR)\*.d $(APPNAME)
+endif
+
+# Compiler settings
+CC = gcc
+CXXFLAGS = -std=gnu17 -Wall -g -I$(SDL2LIB) -I$(INCDIR) 
+LDFLAGS = -lSDL2
+
+# Output settings
 SRC = $(wildcard $(SRCDIR)/*$(EXT))
 OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
-DEP = $(OBJ:$(OBJDIR)/%.o=%.d)
-# UNIX-based OS variables & settings
-RM = rm
-DELOBJ = $(OBJ)
-# Windows OS variables & settings
-DEL = del
-EXE = .exe
-WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=build\\obj\\%.o)
-
-CXXFLAGS += -I$(INCDIR)
+DEP = $(SRC:$(SRCDIR)/%$(EXT)=$(DEPDIR)/%.d)
 
 ########################################################################
 ####################### Targets beginning here #########################
 ########################################################################
 
+# Build app
 all: $(APPNAME)
 
-# Builds the app
 $(APPNAME): $(OBJ)
 	$(CC) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
-# Creates the dependecy rules
-%.d: $(SRCDIR)/%$(EXT)
-	@$(CPP) $(CXXFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+$(DEPDIR)/%.d: $(SRCDIR)/%$(EXT)
+	@$(CPP) $(CXXFLAGS) $< -MM -MT $(@:$(DEPDIR)/%.d=$(OBJDIR)/%.o) > $@
 
-# Includes all .h files
 -include $(DEP)
 
-# Building rule for .o files and its .c/.cpp in combination with all .h
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
 	$(CC) $(CXXFLAGS) -o $@ -c $<
 
-################### Cleaning rules for Unix-based OS ###################
-# Cleans complete project
-.PHONY: clean
-clean:
-	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
-
-# Cleans only all files with the extension .d
-.PHONY: cleandep
-cleandep:
-	$(RM) $(DEP)
-
-#################### Cleaning rules for Windows OS #####################
-# Cleans complete project
-.PHONY: cleanw
-cleanw:
-	$(DEL) $(WDELOBJ) $(DEP) $(APPNAME)$(EXE)
-
-# Cleans only all files with the extension .d
-.PHONY: cleandepw
-cleandepw:
-	$(DEL) $(DEP)
+# Clean build directory
+clean: 
+	$(CLEAN_CMD)

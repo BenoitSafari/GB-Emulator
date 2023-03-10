@@ -15,4 +15,4 @@ typedef struct {
 // returns true(1) if "a" is between "b" and "c"
 #define BETWEEN(a, b, c) ((a >= b) && (a <= c))
 
-int start();
+int GB_start();

@@ -1,10 +1,11 @@
 /logs
-/.vscode
 
-build/obj/*
-build/launch
+build/obj/*.o
+build/dep/*.d
+build/app*
+build/roms/*.gb
+build/roms/*.gbc
+build/roms/*.gba
+
 /*.d
-
-/roms/*.gb
-/roms/*.gbc
-/roms/*.gba
+/*.o
